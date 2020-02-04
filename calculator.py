@@ -3,7 +3,7 @@ from tkinter import *
 window = Tk()
 window.title("Calculator")
 window.resizable(False, False) #가로 세로 크기조정 막는 코드
-window.configure(background='orange') #색은 승현이가 원하는 색으로 
+window.configure(background='grey') #색은 승현이가 원하는 색으로 
 window.geometry("210x230") #가로 x 세로 크기
 
 display = Entry(window, width=28, justify="right") # justify = left로 하면 왼쪽부터 글 작성
@@ -14,9 +14,8 @@ def isEqualTo():
     display.delete(0, END) #기존에 작성된 수식을 지우고
     display.insert(0, result) #결과값을 insert
 
-def clear():
+def clear(where):
     display.delete(0, END) #C를 누르면 다 지우기
-
 
 
 def btnPress(val):
@@ -25,14 +24,19 @@ def btnPress(val):
     """
     display.insert("end", val)
 
+def myFunction():
+    equation = Entry.get(display)
+    myFun = float(equation) * 0.967 #1 = 0.33 = 3.3%의 세금
+    display.delete(0, END)
+    display.insert(0,myFun)
 
 
 #FIRST ROW
 #버튼 생성
-b_my = Button(window, text='M', width=5)
-b_c = Button(window, text='C', width=5)
+b_my = Button(window, text='M', width=5, command = myFunction)
+b_c = Button(window, text='C', width=5, command = lambda:clear(END)) #clear button
 b_ce = Button(window, text = 'CE', width=5)
-b_e = Button(window, text='=', width=5)
+b_e = Button(window, text='=', width=5, command = isEqualTo) #parameter (매개변수)가 필요없으니 command만 사용
 
 #lambda라는것을 사용하면 연속으로 호출 가능
 #그냥 command = btnPress()를 사용하게 되면 매개변수를 사용 못함 -> (val) 그래서 람다 사용
