@@ -1,4 +1,5 @@
 from tkinter import *
+
 window = Tk()
 window.title("Calculator")
 window.resizable(False, False) #가로 세로 크기조정 막는 코드
