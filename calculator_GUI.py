@@ -8,6 +8,7 @@ window.geometry("210x230") #가로 x 세로 크기
 
 display = Entry(window, width=28, justify="right") # justify = left로 하면 왼쪽부터 글 작성
 
+
 #FIRST ROW
 #버튼 생성
 b_my = Button(window, text='M', width=5)
