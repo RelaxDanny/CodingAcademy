@@ -10,4 +10,5 @@ display = Entry(ui, width = 28, justify='right')
 
 
 
+
 ui.mainloop() #loop을 통해서 계속 실행
