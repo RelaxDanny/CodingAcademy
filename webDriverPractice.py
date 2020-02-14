@@ -4,9 +4,9 @@ import bs4
 
 window = Tk()
 window.title("Web Opener")
-window.resizable(False, False)
+#window.resizable(False, False)
 window.configure(background='white')
-window.geometry("310x330") 
+window.geometry("210x230") 
 
 def writeID():
     val = Entry.get(id_display)
@@ -49,10 +49,8 @@ open_web = Button(window, text = '아이디, 비번 입력 후 눌러주세요',
 
 open_web.grid(row=3, column=3)
 
-id_display.place(anchor=CENTER)
-pwdd_display.place(anchor=CENTER)
 
-open_web.place(anchor=CENTER)
+open_web.place(relx=0.5, rely=0.5, anchor=CENTER)
 
 
 window.mainloop() #계속해서 loop이란걸 돌리면서 프로그램을 돌리는 코드
