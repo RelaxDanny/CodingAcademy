@@ -42,7 +42,7 @@ class Mother(): #self의 의미는 각 instance를 의미함
         self.age = age
 
     def speak(self):
-        print("my name is ", self.name, self.age, self.color)
+        print("my name is ", self.name, self.age)
     
     def talk(self):
         print("Stop Playing Games!!")
@@ -54,13 +54,19 @@ class Son(Mother): #Hum = parent class, animal = child
         #여기서 super()은 위의 Mother Class의 self.name과 self.age에다가 값을 넣어서 
         #사용하겠다는 뜻
         super().__init__(name, age)     
+        self.name = name # override
         self.color = color #엄마가 좋아하는 색은 알기 싫고 아들이 원하는 색만 알고 싶을때
     
     def talk(self): #override
         print("I Love to play MineCraft Mommy...")
 
 #엄마의 대한 function을 아들이 가져다가 쓸 수 있는 방법
-Kim = Son("youngho", 30, 'Blue')
+
+Jim = Mother("Youm", 55)
+Jim.speak()
+Jim.talk()
+
+Kim = Son("youngho", 30, 'bleu')
+print(Kim.color)
 Kim.speak()
 Kim.talk()
-    
