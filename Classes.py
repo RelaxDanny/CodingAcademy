@@ -40,16 +40,27 @@ class Mother(): #self의 의미는 각 instance를 의미함
     def __init__(self, name, age):
         self.name = name
         self.age = age
+
     def speak(self):
-        print("my name is ", self.name, self.age, self.weight)
+        print("my name is ", self.name, self.age, self.color)
+    
+    def talk(self):
+        print("Stop Playing Games!!")
 
 #같은 기능의 클래스를 다른 이름으로 사용하려면 원래는 이렇게 복붙해야하지만,
 #inheritance (상속)을 사용하면 그럴 필요 없음
 class Son(Mother): #Hum = parent class, animal = child
-    super.__init__(name, age, color)
-    self.color = color
+    def __init__(self, name, age, color):
+        #여기서 super()은 위의 Mother Class의 self.name과 self.age에다가 값을 넣어서 
+        #사용하겠다는 뜻
+        super().__init__(name, age)     
+        self.color = color #엄마가 좋아하는 색은 알기 싫고 아들이 원하는 색만 알고 싶을때
+    
+    def talk(self): #override
+        print("I Love to play MineCraft Mommy...")
 
-
-Kim = Son("youngho", 30, Blue)
+#엄마의 대한 function을 아들이 가져다가 쓸 수 있는 방법
+Kim = Son("youngho", 30, 'Blue')
 Kim.speak()
+Kim.talk()
     
