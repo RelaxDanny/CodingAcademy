@@ -13,6 +13,10 @@ char = pygame.image.load('standing.png')
 clock = pygame.time.Clock()
 
 
+#####1. hit box 그리기!!
+#####2.
+#####3.
+
 class player(object):
     def __init__(self,x,y,width,height):
         self.x = x
@@ -26,6 +30,9 @@ class player(object):
         self.walkCount = 0
         self.jumpCount = 10
         self.standing = True
+        #0304 1번
+        self.hitbox = (self.x + 17, self.y + 11, 29, 52) # #일단은 self.x + 20 ,self.y, 28, 60 으로 해보
+        
 
     def draw(self, win):
         if self.walkCount + 1 >= 27: #maximum walkcount
@@ -44,8 +51,9 @@ class player(object):
                 #총을쏘기위해서 모션 유지
             else:
                 win.blit(walkLeft[0], (self.x, self.y))
-                
-
+        ###추가
+        self.hitbox = (self.x + 17, self.y + 11, 29, 52)
+        pygame.draw.rect(win, (255,0,0), self.hitbox, 2)
 
 class projectile(object):
     def __init__(self,x,y,radius,color,facing):
@@ -73,10 +81,11 @@ class enemy():
         self.walkCount = 0
         self.vel = 3 #enemy's speed
         self.path = [self.x, self.end]
+        self.hitbox = (self.x + 28, self.y + 2, 31, 57) #일단은 self.x + 20 ,self.y, 28, 60 으로 해보
 
     def draw(self, win):
         self.move()
-        if self.walkCount + 1 >= 33: #33을 넘어가면 0으로 change
+        if self.walkCount + 1 >= 33: #33을 넘어가면 0으로 changez
             self.walkCount = 0
 
         if self.vel > 0: #move right
@@ -85,7 +94,9 @@ class enemy():
         else:#moving left
             win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
             self.walkCount += 1
-        pass
+            
+        self.hitbox = (self.x + 28, self.y + 2, 31, 57)
+        pygame.draw.rect(win, (255,0,0), self.hitbox, 2)
 
     def move(self): #y축으로 움직이고 싶으면 x를 y로만 바꿔주면 
         if self.vel > 0:
