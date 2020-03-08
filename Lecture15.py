@@ -16,7 +16,7 @@ score = 0
 
 #####1. Score 작성
 #####2. hit box remove
-#####3.
+#####3. Health bar drawing
 
 class player(object):
     def __init__(self,x,y,width,height):
@@ -35,7 +35,7 @@ class player(object):
         self.hitbox = (self.x + 17, self.y + 11, 29, 52) # #일단은 self.x + 20 ,self.y, 28, 60 으로 해보
         #need two more attributes for enemy
         self.health = 10
-        self.visible = False #one the enemy is dead, erase health bar
+        self.visible = True #one the enemy is dead, erase health bar
         
 
     def draw(self, win):
@@ -56,9 +56,7 @@ class player(object):
             else:
                 win.blit(walkLeft[0], (self.x, self.y))
                 
-        ###추가
-        pygame.draw.rect(win, (255,0,0), (self.hitbox[0], self.hitbox[1] - 20, 50, 10))
-        pygame.draw.rect(win, (0,255,0), (self.hitbox[0], self.hitbox[1] - 20, 50, 10))
+       
         self.hitbox = (self.x + 17, self.y + 11, 29, 52)
         #pygame.draw.rect(win, (255,0,0), self.hitbox, 2)
 
@@ -92,18 +90,22 @@ class enemy():
 
     def draw(self, win):
         self.move()
-        if self.walkCount + 1 >= 33: #33을 넘어가면 0으로 changez
-            self.walkCount = 0
+        if self.visible:#if enemy is alive
+            if self.walkCount + 1 >= 33: #33을 넘어가면 0으로 changez
+                self.walkCount = 0
 
-        if self.vel > 0: #move right
-            win.blit(self.walkRight[self.walkCount // 3], (self.x, self.y))
-            self.walkCount += 1
-        else:#moving left
-            win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
-            self.walkCount += 1
-            
-        self.hitbox = (self.x + 28, self.y + 2, 31, 57)
-        pygame.draw.rect(win, (255,0,0), self.hitbox, 2)
+            if self.vel > 0: #move right
+                win.blit(self.walkRight[self.walkCount // 3], (self.x, self.y))
+                self.walkCount += 1
+            else:#moving left
+                win.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
+                self.walkCount += 1
+                
+            self.hitbox = (self.x + 28, self.y + 2, 31, 57)
+            #pygame.draw.rect(win, (255,0,0), self.hitbox, 2)
+             ###추가
+            pygame.draw.rect(win, (255,0,0), (self.hitbox[0], self.hitbox[1] - 20, 50, 10)) #background
+            pygame.draw.rect(win, (0,255,0), (self.hitbox[0], self.hitbox[1] - 20, 50 - ((50/10)* (10 - self.health)), 10)) #declining health bar
 
     def move(self): #y축으로 움직이고 싶으면 x를 y로만 바꿔주면 
         if self.vel > 0:
@@ -120,6 +122,10 @@ class enemy():
                 self.walkCount = 0
 
     def hit(self):
+        if self.health > 0:
+            self.health = self.health - 1
+        else:
+            self.visible = False
         print("hit")
 
         
