@@ -129,8 +129,7 @@ def record():
     return return_list
 
 # play 함수 speed_factor를 통해 실행 속도 조절 가능
-def play(events, speed_factor=1.0, include_clicks=True, include_moves=True, include_wheel=True):
-
+def play(events, speed_factor=2, include_clicks=True, include_moves=True, include_wheel=True):
     state = key.stash_state()
     last_time = None
     for event in events:
@@ -190,7 +189,7 @@ def runRecoderAndPlayer(choose=None, MacroFileIdx=None, playtime=None):
             print(event)
 
             for i in range(playcnt):
-                time.sleep(1)
+               #1time.sleep(1)
                 play(event)
         else:
             return
