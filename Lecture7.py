@@ -1,16 +1,3 @@
-# example_list = [1,2,3,9,8,7,10,111,2455]
-
-# for eachNumber in example_list:
-#     print(eachNumber)
-
-# print("Continum Program")
-
-# count = 0
-
-# while count < 3:
-#     print('횟수: ', count)
-#     count += 1
-
 
 # 1 ~ 10까지의 숫자에 대해 모두 더한 값을 출력하는 프로그램을 for 문을 사용하여 작성하세요.
 total = 0

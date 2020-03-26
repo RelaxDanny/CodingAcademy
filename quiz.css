@@ -1,0 +1,25 @@
+body {
+    background-color: #eee;
+    text-align: left;
+    
+}
+table{
+    border-collapse: collapse;
+    width: 100%;
+}
+th{
+    padding: 5px;
+    border-bottom: 1px solid black;
+}
+td{
+    padding: 5px;
+    border-bottom: 1px solid #cccccc;
+}
+h1{
+    font-family: 'Inconsolata', monospace;
+}
+.center{
+    margin: auto;
+    width: 750px;
+}
+/*your code here*/
