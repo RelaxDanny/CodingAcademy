@@ -1,4 +1,4 @@
-<div>Teachable Machine Image Model</div>
+<div>rxYoungho, Image Training</div>
 <button type="button" onclick="init()">Start</button>
 <div id="webcam-container"></div>
 <div id="label-container"></div>
@@ -50,21 +50,10 @@
     async function predict() {
         // predict can take in an image, video or canvas html element
         const prediction = await model.predict(webcam.canvas);
-        if(prediction[0].probability.toFixed(2) == 1.00){
-            labelContainer.childNodes[0].innerHTML = " 몽블랑 향수 입니다."
+        for (let i = 0; i < maxPredictions; i++) {
+            const classPrediction =
+                prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+            labelContainer.childNodes[i].innerHTML = classPrediction;
         }
-        else if(prediction[1].probability.toFixed(2) >= 1.00){
-            labelContainer.childNodes[0].innerHTML = " 존 바바토스 향수 입니다."
-        }
-        else{
-            labelContainer.childNodes[0].innerHTML = "알 수 없습니다."
-        }
-
-        // for (let i = 0; i < maxPredictions; i++) {
-        //     const classPrediction =
-        //         prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-        //     labelContainer.childNodes[i].innerHTML = classPrediction;
-        // }
-        
     }
 </script>
