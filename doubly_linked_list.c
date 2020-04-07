@@ -68,7 +68,7 @@ void inserAfter(Node* Current, Node* newNode){
 
     //Not head
 
-        // if tai;
+        // if tail;
         if(Current -> Next == NULL){
             Current -> Next = newNode;
             newNode -> Prev = Current;
@@ -97,4 +97,8 @@ void removeNode(Node** head, Node* remove){
     }
 
     deleteNode(remove);
+}
+
+main(){
+
 }
