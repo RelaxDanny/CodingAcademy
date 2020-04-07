@@ -27,5 +27,3 @@ class kNN:
         #majority vote, most common class label
         most_common = Counter(k_nearest_labels).most_common(1) #[(number that occurs most, count of it)]
         return most_common[0][0]
-
-
