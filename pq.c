@@ -1,5 +1,4 @@
 // priority_queue.c
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -22,9 +21,13 @@ void add_to_last(struct List *head, struct List *list) {
     list->next = head; //list's next is now pointing to the head address.
     //TODO - Complete setting up links to insert this node (list)
     //list->prev = head->prev->prev->next;
+    // head->prev->next = list;
+    // head->prev = list;
+    // // prior to the head node (head)
+    list->prev = head->prev;
     head->prev->next = list;
     head->prev = list;
-    // prior to the head node (head)
+    
 }
 
 void add_to_first(struct List *head, struct List *list) { //Adding a node between head and the seond node
@@ -46,8 +49,8 @@ struct List* remove_last(struct List *head) {
   head->prev->prev->next = head;
   //TODO - Fix links to remove the last node in the list.
   head->prev = head->prev->prev;
-  list->next = NULL;
-  list->prev = NULL;
+  list->next = list->prev = NULL;
+
   //  This is the node immediately before head
   return list;  //  The method will return the node that was removed
 }
@@ -99,7 +102,7 @@ int compare(struct List *list1, struct List *list2) {
    else if(strcmp(list1->data, list2->data) == 0){
       return 0;
    }
-   else{
+   else if(strcmp(list1->data, list2->data) > 0){
       return 1;
    }
 }
@@ -173,7 +176,7 @@ int list_count_elements(struct List *head) {
         counter = counter -> next;
         count++;
     }
-    count = count +1; //since we started from the head->next to head, we need to add 1 to it.
+    //printf("%d\n",count);
     return count;
 }
 
@@ -198,37 +201,49 @@ char **alphabetize(char *str) {
   // token = strtok_r(rest, sep, &rest);
   // printf("%s\n", token);
   while ((token = strtok_r(rest, sep, &rest))) {
-    printf("pass");
+    //printf("pass");
     struct List *list = new_list();  // Build a new list node
-    printf("pass2");
     // TODO: Copy the next word (token) to the data field in the node
     //    and add the node to the priority queue with insert()
     list->data = token;
+    //printf("pass2");
     insert(&pq, list);
   }
-  printf("pass3");
+  //printf("pass3");
   wordcount = list_count_elements(&pq);
   wordlist = (char **)malloc((wordcount+1) * sizeof(char *));
 
   for(i = 0; !is_empty(&pq); i++) {
     struct List *list;
+    //printf("%s\n", &pq);
     //TODO: pop list from stack and update wordlist[i] with that word
-    word = list->data;
-    wordlist[i] = word;
+    list = remove_first(&pq); 
+    wordlist[i] = list->data;
     // TODO: 'Free' the node removed from the list
+    del_list(list);
     //free(list);
+
   }
   wordlist[wordcount] = 0; // null the last slot
   return wordlist;
-  
 }
 
 void print_words(char **wordList) {
   // TODO write code to print each word in the array
   // of strings passed in
-    for(int i = 0; i < strlen(*wordList); i++){
-        printf("%s\n", wordList[i]);
-    }
+  //printf("the length of wordList is: %d\n", strlen(wordList[0])); //why is this only four?
+  int index = 0;
+  int check = 0;
+
+  while(check == 0){
+      if(wordList[index] != 0){
+          printf("%s\n", wordList[index]);
+          index = index + 1;
+      }
+      else{
+          break;
+      }
+  }  
 }
 
 
