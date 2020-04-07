@@ -28,5 +28,4 @@ for i in img:
     print("다운 완료:", n, "번째",imgUrl)
     n += 1
 
-print('Download finish')        
-    
+print('Download finish')
