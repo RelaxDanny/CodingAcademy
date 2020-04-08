@@ -102,11 +102,10 @@ int compare(struct List *list1, struct List *list2) {
    else if(strcmp(list1->data, list2->data) == 0){
       return 0;
    }
-   else if(strcmp(list1->data, list2->data) > 0){
+   else{
       return 1;
    }
 }
-
 // insert - This function inserts the element list into
 //         the linked list pointed at by head. It places the
 //         node where the data should sort.
