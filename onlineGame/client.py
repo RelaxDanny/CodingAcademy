@@ -17,7 +17,7 @@ class Player():
         self.height = height
         self.color = color
         self.rect = (x,y,width,height)
-        self.vel = 3
+        self.vel = 6
 
     def draw(self, win):
         pygame.draw.rect(win, self.color, self.rect)
@@ -43,7 +43,7 @@ class Player():
         self.rect = (self.x, self.y, self.width, self.height)
 
 
-def read_pos(str):
+def read_pos(str): #45,67
     str = str.split(",")
     return int(str[0]), int(str[1])
 
