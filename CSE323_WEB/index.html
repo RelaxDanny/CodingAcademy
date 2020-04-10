@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title> Youngho Kim, youngho.kim@stonybrook.edu </title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata&display=swap" rel="stylesheet">
+    <link href="quiz.css" rel="stylesheet" />
+    <!-- <script src="jquery-3.4.1.min.js"></script> -->  
+  </head>
+  <body>
+    <!--Your code here-->
+    <div class = "center">
+      <h1>Do you know the capital of this country?</h1>
+      <table width="500" id = "quiz-table">
+        <tr><!--First row-->
+          <th width="300"><b>Country</b></th>
+          <th width="300"><b>Capital</b></th>
+          <th width="300"><b>Answer</b></th>
+        </tr>
+          <tr><!--Second row-->
+            <td id = "quiz-question"></td>
+            <td> <input type = "text" id = "quiz-answer"> </td>
+            <td> <input type = "submit" id = "quiz-submit" value = "See Answer" > </td>
+            <!-- onclick="check()" -->
+          </tr>
+          <tr><!--Second row-->
+            <td>
+            <!-- <input name ="radio-answer" type="radio" id="all"  value = "ALL"> -->
+            <input type="radio" name="radio-answer" value="all" id = "all" checked="checked"/><font>All</font>
+            <!-- <label for="all">All</label> -->
+            </td>
+            <td>
+            <input type="radio" name="radio-answer" value="correct-only" id = "correct" /><font>Correct Only</font>
+            <!-- <input name ="radio-answer" type="radio" id="correct-only"  value = "Correct-Only">
+            <label for="correct-only">Correct Only</label> -->
+            </td>
+            <td>
+            <input type="radio" name="radio-answer" value="wrong-only" id = "wrong" /><font>Wrong Only</font>
+            <!-- <input name ="radio-answer" type="radio" id="wrong-only"  value = "Wrong-Only">  
+            <label for="wrong-only">Wrong Only</label> -->
+            </td>
+            
+            <!-- onclick="check()" -->
+          </tr>
+      </table>
+    </div>
+    <div style = display:none id = "icon" style="color:Blue;"> <i class="fas fa-check"></i> </div>
+    
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="./country_capital_pairs.js"></script>
+    <script src="./quiz.js"></script>
+    
+  </body>
+</html>
+
