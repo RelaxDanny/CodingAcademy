@@ -92,12 +92,15 @@ def makeNewMacroFileName():
 def record():
 
     recorded = queue.Queue()
-    m_button_state = checkMouseState(0x04)  # middle button down = 0 or 1. Button up = -127 or -128
+    #m_button_state = checkMouseState(0x04)  # middle button down = 0 or 1. Button up = -127 or -128
+    answer = "" # initially 0 since it is during the record
     macroStart = False
 
-    print('press middle btn to start recording')
+    #print('press middle btn to start recording')
+    answer = input('press s to start recording')
     while not macroStart:
-        new_m_button_state = checkMouseState(0x04)
+        # new_m_button_state = checkMouseState(0x04)
+        new_answer = "s"
         if new_m_button_state != m_button_state:
             m_button_state = new_m_button_state
 
