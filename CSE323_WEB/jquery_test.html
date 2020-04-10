@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+    <style>
+        a.test{
+            font-weight : bold;
+        }
+    </style>
+    <meta charset="utf-8">
+    <title>Demo</title>
+</head>
+<body>
+    <a href="http://jquery.com/">jQuery</a>
+    <script src="jquery-3.4.1.min.js"></script>
+    <script>
+ 
+    // Your code goes here.
+    $("a").addClass("test");
+
+    $( document ).ready(function() {
+        $("a").click(function(event){
+            alert("No more link");
+            event.preventDefault();
+            $(this).hide("slow"); //천천히 링크 지워줌
+        });
+        //var country_capital_pairs = pairs
+    });
+    $("a").removeClass("test");
+    </script>
+</body>
+</html>
