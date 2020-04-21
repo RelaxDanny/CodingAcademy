@@ -1,85 +1,43 @@
 import pygame
 from network import Network
+from player import Player
 
-width = 500
-height = 500
+pygame.font.init()
+width = 700
+height = 700
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Client")
 
-clientNumber = 0
-
-
-class Player():
-    def __init__(self, x, y, width, height, color):
+class Button:
+    def __init__(self, text, x, y, color):
+        self.text = text
         self.x = x
         self.y = y
-        self.width = width
-        self.height = height
         self.color = color
-        self.rect = (x,y,width,height)
-        self.vel = 3
+        self.width = 150
+        self.height = 100
 
-    def draw(self, win):
-        pygame.draw.rect(win, self.color, self.rect)
+    def draw(self,win):
+        pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.height))
+        font = pygame.font.SysFont("comicsans", 40)
+        text = font.render(self.text, 1, (255,255,255))
+        win.blit(text, (self.x + round(self.width/2 - round(text.get_width()/2)), self.y + round(self.height/2 - round(text.get_heigth()/2))))
 
-    def move(self):
-        keys = pygame.key.get_pressed()
-
-        if keys[pygame.K_LEFT]:
-            self.x -= self.vel
-
-        if keys[pygame.K_RIGHT]:
-            self.x += self.vel
-
-        if keys[pygame.K_UP]:
-            self.y -= self.vel
-
-        if keys[pygame.K_DOWN]:
-            self.y += self.vel
-
-        self.update()
-
-    def update(self):
-        self.rect = (self.x, self.y, self.width, self.height)
-
-
-def read_pos(str):
-    str = str.split(",")
-    return int(str[0]), int(str[1])
-
-
-def make_pos(tup):
-    return str(tup[0]) + "," + str(tup[1])
-
+    def click(self, pos): #pos = mouse's position as an x,y coordinate
+        x1 = pos[0]
+        y1 = pos[1]
+        if self.x <= x1 <= self.x + self.width and self.y <= y1 <= self.y + self.height:
+            return True # the mouse is in that box!
+        else:
+            return False
 
 def redrawWindow(win,player, player2):
-    win.fill((255,255,255))
-    player.draw(win)
-    player2.draw(win)
-    pygame.display.update()
+    win.fill((128,128,128))
+    pass
 
 
+btns = [Button("Rock", 50, 500, (0,0,0)), Button("Scissors", 250, 500, (255,0,0)), Button("Paper", 450, 500,(0,255,0))]
 def main():
-    run = True
-    n = Network()
-    startPos = read_pos(n.getPos())
-    p = Player(startPos[0],startPos[1],100,100,(0,255,0))
-    p2 = Player(0,0,100,100,(255,0,0))
-    clock = pygame.time.Clock()
-
-    while run:
-        clock.tick(60)
-        p2Pos = read_pos(n.send(make_pos((p.x, p.y))))
-        p2.x = p2Pos[0]
-        p2.y = p2Pos[1]
-        p2.update()
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-                pygame.quit()
-
-        p.move()
-        redrawWindow(win, p, p2)
+    pass 
 
 main()
