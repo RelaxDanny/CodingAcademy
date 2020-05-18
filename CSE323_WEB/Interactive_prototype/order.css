@@ -1,0 +1,128 @@
+body {
+	/******************************************************************
+  This contains the font, Internet Explorer fall back options and 
+  the background color for all of the sites
+  ******************************************************************/
+	background: #C3E6F3 no-repeat center center fixed;
+	margin: 0 auto;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", "sans-serif";
+	/* IE Fallback */
+	background: #c3e6f4;
+	width: 100%;
+	height: 100%;
+}
+/******************************************************************
+Below is the code for the red and blue button class which will be 
+for all of the buttons in the program including the submit, next,
+cancel, etc. 
+******************************************************************/
+
+.blueButton {
+	-moz-box-shadow: inset 0px -3px 7px 0px #29bbff;
+	-webkit-box-shadow: inset 0px -3px 7px 0px #29bbff;
+	box-shadow: inset 0px -3px 7px 0px #29bbff;
+	background-color: #0088BB;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px solid #0088BB;
+	display: inline-block;
+	cursor: pointer;
+	color: #fff;
+	font-family: Arial;
+	font-size: 15px;
+	padding: 9px 23px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #263666;
+}
+
+.blueButton:hover {
+	background-color: #369cb8;
+}
+
+.blueButton:active {
+	position: relative;
+	top: 1px;
+}
+
+/******************************************************************
+Below is the code for the confirm order page, it displays the material ID and cost of the order
+******************************************************************/
+
+.payment input[type=text] {
+	width: 95%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	resize: none;
+	text-align: left;
+}
+
+.payment input[type=text]:focus {
+	border: 1px solid #a8a8a8;
+}
+
+.payment input[type=submit],
+.payment input[type=button] {
+	float: right;
+	margin: -20px 20px 10px 0px;
+}
+
+.payment {
+	border-radius: 5px;
+	background-color: #f8f8f8;
+	padding: 40px;
+	width: 40%;
+	margin: 0 auto;
+	margin-top: 20px;
+	box-shadow: 1px 1px 5px #888888;
+}
+
+
+/******************************************************************
+Below is the form for the confirm order table 
+******************************************************************/
+
+/* CSS for Credit Card Payment form */
+.credit-card-box .panel-title {
+    display: inline;
+    font-weight: bold;
+}
+.credit-card-box .form-control.error {
+    border-color: red;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,0,0,0.6);
+}
+.credit-card-box label.error {
+  font-weight: bold;
+  color: red;
+  padding: 2px 8px;
+  margin-top: 2px;
+}
+.credit-card-box .payment-errors {
+  font-weight: bold;
+  color: red;
+  padding: 2px 8px;
+  margin-top: 2px;
+}
+.credit-card-box label {
+    display: block;
+}
+/* The old "center div vertically" hack */
+.credit-card-box .display-table {
+    display: table;
+}
+.credit-card-box .display-tr {
+    display: table-row;
+}
+.credit-card-box .display-td {
+    display: table-cell;
+    vertical-align: middle;
+    width: 50%;
+}
+.credit-card-box .panel-heading img {
+    min-width: 180px;
+}
