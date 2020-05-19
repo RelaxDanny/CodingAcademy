@@ -47,5 +47,10 @@ Recursion 특징:
 
 """
 def getFactorial(n):
-    pass
-print(getFactorial(10))
+    if n < 2: return 1 #when 0 or 1
+    else: return n * getFactorial(n-1)
+print(getFactorial(5))
+
+import math
+
+print(math.factorial(100000))
