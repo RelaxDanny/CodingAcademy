@@ -2,20 +2,20 @@
 
 
 
-# def selection_sort(A):
-#     for i in range(len(A)):
-#         minIndex = i
-#         for j in range(i+1, len(A)):
-#             if A[j] < A[minIndex]:
-#                 minIndex = j
-#         if minIndex != i:
-#             A[i], A[minIndex] = A[minIndex], A[i]
-#     return A
+def selection_sort(A):
+    for i in range(len(A)):
+        minIndex = i
+        for j in range(i+1, len(A)):
+            if A[j] < A[minIndex]:
+                minIndex = j
+        if minIndex != i:
+            A[i], A[minIndex] = A[minIndex], A[i]
+    return A
 
-# A = [6,2,4,6,7,8,98,122,1,2,4,6,65]
+A = [6,2,4,6,7,8,98,122,1,2,4,6,65]
 
 
-# print(selection_sort(A))
+print(selection_sort(A))
 
 
 tuple1 = "abcd", 1,2,3,4
