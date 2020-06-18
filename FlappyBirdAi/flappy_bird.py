@@ -5,6 +5,7 @@ import time
 import os
 import random
 
+pygame.font.init()
 #use uppercase for constants
 WIN_WIDTH = 570
 WIN_HEIGHT = 800
@@ -14,6 +15,7 @@ PIPE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("FlappyBirdAi
 BASE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("FlappyBirdAi\imgs", "base.png")))
 BG_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("FlappyBirdAi\imgs", "bg.png")))
 
+STAT_FONT = pygame.font.SysFont("comicsans", 50)
 
 class Bird:
     IMGS = BIRD_IMGS
@@ -87,17 +89,110 @@ class Bird:
         return pygame.mask.from_surface(self.img)
 
 
-def draw_window(win, bird):
+
+
+
+
+class Pipe:
+    GAP = 200
+    VEL = 5
+
+    def __init__(self, x):
+        self.x = x
+        self.height = 0
+        self.gap = 100
+        self.top = 0 #where are the top and bottom of pipe img?
+        self.bottom = 0
+
+        self.PIPE_TOP = pygame.transform.flip(PIPE_IMG, False, True) #flip the pipe (위에 있는거)
+        self.PIPE_BOTTOM = PIPE_IMG
+        self.passed = False #is bird passed from pipe?
+        self.set_height() #define where top and bottom and how tall the pipe is
+
+    def set_height(self):
+        #give random number to the pipe height
+        self.height = random.randrange(40,450)
+        self.top = self.height - self.PIPE_TOP.get_height()
+        self.bottom = self.height + self.GAP
+    
+    def move(self):
+        self.x -= self.VEL 
+    
+    def draw(self, win): #draw pipe
+        win.blit(self.PIPE_TOP, (self.x, self.top))
+        win.blit(self.PIPE_BOTTOM, (self.x, self.bottom))
+    
+    def collide(self, bird): #이번엔 마스크라는 기능을 사용할것. 박스가 아니라
+        # 박스를 사용하면 오차가 심함. 그래서 마스크라는 함수를 써서 실제 픽셀의 위치를 확인하고 부딛혔는지 확인 
+        #위에서 get_mask를 만든이유
+        bird_mask = bird.get_mask()
+        top_mask = pygame.mask.from_surface(self.PIPE_TOP)
+        bottom_mask = pygame.mask.from_surface(self.PIPE_BOTTOM)
+        #offset = how far each objects are 
+        # bird to top 
+        top_offset = (self.x - bird.x, self.top - round(bird.y)) #좌표는 decimal이면 안되어서
+        bottom_offset = (self.x - bird.x, self.bottom - round(bird.y))
+
+        b_point = bird_mask.overlap(bottom_mask, bottom_offset)  #returns True when collide
+        t_point = bird_mask.overlap(top_mask, top_offset)
+
+        if t_point or b_point:
+            return True
+        else:
+            return False  #안부딛힘 
+
+#땅바닥 움직이는 모션 주기
+class Base:
+    VEL = 5 #same as pipe
+    WIDTH = BASE_IMG.get_width()
+    IMG = BASE_IMG
+
+    def __init__(self, y):
+        self.y = y
+        self.x1 = 0
+        self.x2 = self.WIDTH
+
+    def move(self):
+        #왼쪽으로 이동해야하니 빼주기
+        self.x1 -= self.VEL
+        self.x2 -= self.VEL 
+
+        #2개의 이미지를 사용하면서 왼쪽으로 보내고 하나가 0에닿으면 다시 오른쪽으로 오게하는 코드
+        if self.x1 + self.WIDTH < 0:
+            self.x1 = self.x2 + self.WIDTH
+        if self.x2 + self.WIDTH < 0:
+            self.x2 = self.x1 + self.WIDTH
+
+    def draw(self, win):
+        win.blit(self.IMG, (self.x1, self.y))
+        win.blit(self.IMG, (self.x2, self.y))
+
+
+
+
+
+
+def draw_window(win, bird, pipes, base, score):
     #draw the back ground and draw bird on top
     win.blit(BG_IMG, (0,0)) #top_left position에다가 bg넣기
-    bird.draw(win)
-    pygame.display.update()
+    for pipe in pipes:
+        pipe.draw(win)
 
+    score_label = STAT_FONT.render("Score: " + str(score),1,(255,255,255))
+    win.blit(score_label, (WIN_WIDTH - score_label.get_width() - 15, 10))
+    
+    base.draw(win)
+
+    bird.draw(win)
+    pygame.display.update() 
 
 def main():
     win = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
-    bird = Bird(200, 200) #starting position
+    bird = Bird(230, 350) #starting position
+    base = Base(730) #very bottom of the screen
+    pipes = [Pipe(700)]
     run = True
+    score = 0 
     clock = pygame.time.Clock()
 
     while run:
@@ -106,13 +201,38 @@ def main():
             #when user clicks something do loop
             if event.type == pygame.QUIT:
                 run = False
-        bird.move() #call movement in every frame
+            
+        # bird.move() #call movement in every frame
+        add_pipe = False
         #바로 떨어지는걸 잡기위해 clock를 써서 느리게 떨어뜨릴거
-    
-        draw_window(win, bird)
+        rem = []
+        for pipe in pipes:
+            #계속 새로운 파이프가 나오게 하기 x축의 끝을 보면 바로 생성
+            if pipe.collide(bird):
+                pass
+            if pipe.x + pipe.PIPE_TOP.get_width() < 0:
+                rem.append(pipe)
+            if not pipe.passed and pipe.x < bird.x:
+                pipe.passed = True
+                add_pipe = True
+
+            pipe.move()
+        if add_pipe:
+            score += 1 #파이프 패스하면 스코어 1점
+            pipes.append(Pipe(700)) #이거 숫자바꾸면 좀더 빠르게 나타남
+
+        #지나가면 지우기
+        for r in rem:
+            pipes.remove(r)
+
+        if bird.y + bird.img.get_height() > 730:
+            #hit the floor
+            pass
+
+        base.move()
+        draw_window(win, bird, pipes, base, score)
     
     pygame.quit()
     quit()
 
 main()
-            
