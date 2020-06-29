@@ -1,8 +1,11 @@
 import pygame
-# import neat
+import neat
 import time
 import os
 import random
+
+#neuro evolution augmented topology
+pygame.font.init()
 
 #use uppercase for constants
 WIN_WIDTH = 570
@@ -12,6 +15,8 @@ BIRDS_IMGS = [pygame.transform.scale2x(pygame.image.load(os.path.join("FlappyBir
 PIPE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("FlappyBirdAi\imgs", "pipe.png")))
 BASE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("FlappyBirdAi\imgs", "base.png")))
 BG_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("FlappyBirdAi\imgs", "bg.png")))
+
+STAT_FONT = pygame.font.SysFont("comicsans", 50)
 
 class Bird:
     IMGS = BIRDS_IMGS
@@ -130,20 +135,51 @@ class Pipe:
             return False  #안부딛힘 
 
 
+#땅 움직이는 모션
+class Base:
+    VEL = 5
+    WIDTH = BASE_IMG.get_width()
+    IMG = BASE_IMG
+
+    def __init__(self, y):
+        self.y = y
+        self.x1 = 0
+        self.x2 = self.WIDTH
+    
+    def move(self):
+        self.x1 -= self.VEL
+        self.x2 -= self.VEL
+
+        if self.x1 + self.WIDTH < 0:
+            self.x1 = self.x2 + self.WIDTH
+        if self.x2 + self.WIDTH < 0:
+            self.x2 = self.x1 + self.WIDTH
+    
+    def draw(self, win):
+        win.blit(self.IMG, (self.x1, self.y))
+        win.blit(self.IMG, (self.x2, self.y))
 
 
-def draw_window(win, bird, pipes):
+
+def draw_window(win, bird, pipes, base, score):
     win.blit(BG_IMG, (0,0))
     
     for pipe in pipes:
         pipe.draw(win)
 
+    score_label = STAT_FONT.render("Score: " + str(score), 1, (255,255,255))
+    win.blit(score_label, (WIN_WIDTH - score_label.get_width() - 15, 10))
+
+    base.draw(win)
     bird.draw(win)
     pygame.display.update()
 
 def main():
+    base = Base(730)
     pipes = [Pipe(700)]
     win = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
+
+    score = 0
     bird = Bird(200, 200)
     run = True
     clock = pygame.time.Clock()
@@ -164,7 +200,7 @@ def main():
                 add_pipe = True
             pipe.move()
         if add_pipe:
-            #score += 1
+            score += 1
             pipes.append(Pipe(700))
         for r in rem:
             pipes.remove(r)
@@ -174,8 +210,26 @@ def main():
             
             
         # bird.move()
-        draw_window(win, bird, pipes)
+        base.move()
+        draw_window(win, bird, pipes, base, score)
     pygame.quit()
     quit()
 
 main()
+
+def run():
+    config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction, 
+                        neat.DefaultSpeciesSet, neat.DefaultStagnation, config_path)
+
+    p = neat.Population(config)
+    #statistic info
+    p.add_reporter(neat.StdOutReporter(True))
+    stats = neat.StatisticsReporter()
+    p.add_reporter(stats)
+
+    winner = p.run(main, 50) #main을 50번 돌려라 genomes을 다 보내라
+
+if __name__ == "__main__":
+    local_dir = os.path.dirname(__file__)
+    config_path = os.path.join(local_dir, "config_feedforward.txt")
+    run(config_path)
