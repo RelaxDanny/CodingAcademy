@@ -1,7 +1,6 @@
 K = int(input())
 num_stack = []
 
-
 for _ in range(K):
     num = int(input())
     if num == 0:
