@@ -18,6 +18,7 @@ visit[0][0] = True
 distance[0][0] = 1
 
 while queue:
+
     x, y = queue.pop(0) #queue의 첫번째 튜플을 리턴하고 지움 -> pop의 역할
     # print(x,y)
     for i in range(4): #dx, dy의 길이만큼
