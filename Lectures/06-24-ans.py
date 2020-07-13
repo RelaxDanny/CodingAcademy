@@ -19,6 +19,8 @@ print('\n'.join([''.join([str(i) for i in row]) for row in arr]))
 "aa".join("bb")
 
 
+myTuple = ("John", "Peter", "Vicky")
+
 
 
 
