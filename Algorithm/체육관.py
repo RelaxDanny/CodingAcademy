@@ -20,15 +20,10 @@ def solution(n, lost, reserve):
                     # print(answer)
                     answer[i] -= 1
                     answer[i-1] += 1
-            elif i < len(answer)-1:
+            if i < len(answer)-1 and answer[i]==2:
                 if answer[i+1] == 0:
                     answer[i] -= 1
                     answer[i+1] += 1
-                
-            
-            # if i >= 1:
-            
-    print(answer)
     result = 0
     for i in range(len(answer)):
         if answer[i] != 0:
@@ -36,4 +31,5 @@ def solution(n, lost, reserve):
     return result
 
 
-print(solution(7, [1,3,5], [1,2,4,6])) 
+
+print(solution(3, [1,2], [2,3])) 
