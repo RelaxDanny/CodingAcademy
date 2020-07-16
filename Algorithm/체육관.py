@@ -24,6 +24,7 @@ def solution(n, lost, reserve):
                 if answer[i+1] == 0:
                     answer[i] -= 1
                     answer[i+1] += 1
+    print(answer)
     result = 0
     for i in range(len(answer)):
         if answer[i] != 0:
