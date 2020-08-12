@@ -22,7 +22,7 @@ def solution(n, lost, reserve):
                     answer[i-1] += 1
             if i < len(answer)-1 and answer[i]==2:
                 if answer[i+1] == 0:
-                    answer[i] -= 1
+                    answer[i] -= 1kyj
                     answer[i+1] += 1
     print(answer)
     result = 0
@@ -30,7 +30,5 @@ def solution(n, lost, reserve):
         if answer[i] != 0:
             result += 1
     return result
-
-
 
 print(solution(3, [1,2], [2,3])) 
