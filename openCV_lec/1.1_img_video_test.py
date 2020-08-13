@@ -140,4 +140,52 @@ else:
 cap.release()
 cv2.destroyAllWindows()
 
+# 8. 카메라로 사진 찍기 
+import cv2
+
+cap = cv2.VideoCapture(0)
+
+if cap.isOpened():
+    while True:
+        ret, frame = cap.read()
+        if ret:
+            cv2.imshow('camera', frame)
+            if cv2.waitkey(1) != -1: #아무키나 누르면
+                cv2.imwrite('photo.jpg', frame)
+                break
+        else:
+            break
+else:
+    print("no cam")
+cap.release()
+cv2.destroyAllWindows()
+
+# 9. 카메라로 녹화하기
+import cv2
+
+cap = cv2.VideoCapture(0)
+
+if cap.isOpened():
+    file_path = "record.avi"
+    fps = 25.40
+    fourcc = cv2.VideoWriter_fourcc(*'DIVX') #인코딩 포맷 문자 #비디오 인코딩 형식 4글자 -> MJPG, DIVX등등
+    width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+    height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+    size = (int(width), int(height)) #Frame 크기
+    out = cv2.VideoWriter(file_path, fourcc, fps, size) #비디오 writer 객체 생성 // 저장할 파일 이름, 4글자 인코딩 이름, fps, 프레임 사이즈
+    #http://fourcc.org/codecs.php 에서 코덱 확인 ㄱㄱ
+    while True:
+        ret, frame = cap.read()
+        if ret:
+            cv2.imshow('cam-record', frame)
+            out.write(frame) #파일 저장
+            if cv2.waitKey(int(1000/fps)) != 1:
+                break
+        else:
+            break
+    out.release()
+else:
+    print("no cam")
+cap.release()
+cv2.destroyAllWindows()
 
