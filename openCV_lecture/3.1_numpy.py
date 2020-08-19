@@ -35,3 +35,31 @@ print(d)
 
 #임의로 타입을 정해줄때
 a = np.uint8([1,2,3,4])
+print("*" * 30)
+
+#2. 크기와 초기 값으로 numpy array 생성
+a = np.empty((2,3)) # 쓰레기값으로 배열 생성 // 2 rows, 3 cols 2열 3행
+print(a)
+print(a.dtype)
+print("*" * 30)
+
+a.fill(255)
+print(a)
+print("*" * 30)
+
+b = np.zeros((2,3))
+print(b)
+print(b.dtype)
+print("*" * 30)
+
+c = np.zeros((2,3), dtype=np.int8)
+print(c)
+print("*" * 30)
+
+d = np.ones((2,3))
+print(d)
+print("*" * 30)
+
+e = np.full((2,3,4), 255) #3차원 배열, 
+print(e)
+# page 68
