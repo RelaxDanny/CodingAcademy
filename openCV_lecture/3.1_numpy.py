@@ -62,4 +62,30 @@ print("*" * 30)
 
 e = np.full((2,3,4), 255) #3차원 배열, 
 print(e)
-# page 68
+print("*" * 30)
+
+# 3. 기존 image array를 이용하여 같은 shape갖는 np array 만들기
+img = cv2.imread("0_high.jpg")
+print(img)
+print(img.shape)
+print("*" * 30)
+
+a = np.empty_like(img)
+b = np.zeros_like(img)
+c = np.ones_like(img)
+d = np.full_like(img, 255) #Fill 할 value를 넣어주면 전체를 그 값으로 채움
+print(a)
+print(b)
+print(c)
+print(d)
+print("*" * 30)
+
+# 4.순차적인 방법으로 생성, 랜덤값 방법으로 생성
+a = np.arange(5)
+print(a)
+print("*" * 30)
+b = np.arange(5.0)
+print(b)
+print("*" * 30)
+c= np.arange(3, 9, 2) #3부터 9까지 2번씩 건너띄우기 -> range와 같음
+print(c)
