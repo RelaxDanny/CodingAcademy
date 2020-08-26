@@ -220,3 +220,84 @@ print(a[a>5])
 a[a>5] = 1 #5보다 큰값은 1로 교체
 print(a)
 
+
+
+######################################################
+#병합과 분리
+
+#axis는 축이다 (1,1,1) 이런 배열이 있을경우 각 axis는 index처럼 0, 1, 2의 axis로 표현 => 3개의 축
+a = np.arange(4).reshape(2,2)
+print(a)
+b = np.arange(10,14).reshape(2,2)
+print(b)
+print(np.vstack((a,b))) # vertical
+print(np.hstack((a,b))) # horizontal
+print(np.concatenate((a,b), 0)) # a,b arrays를 0번째 축 기준으로 병합 (2,2)에다가 0번째 축을 기준이라면 (4,2)가 된다.
+print(np.concatenate((a,b), 1)) #1번축 기준으로 병합 (2,2)에서 1번째 축을 기준 -> (2,4)
+
+a = np.arange(12).reshape(4,3)
+b = np.arange(10, 130, 10).reshape(4,3)
+print(a)
+print(b)
+c = np.stack((a,b), 0) #0번 축을 기준으로 배열을 병합
+print(c)
+print(c.shape) # 2,4,3
+
+d = np.stack((a,b), 1) #1번 축
+print(d.shape) # 4,2,3
+print(d)
+
+e = np.stack((a,b), 2) #4,3,2
+print(e.shape)
+print(e)
+
+f = np.stack((a,b), -1) #맨 마지막 axis를 기준
+print(f.shape)
+
+#배열 분리
+# a = np.arange(12)
+# print(np.hsplit(a, 3)) #3개의 1d array로 수평 분리
+# print(np.hsplit(a, [3,6])) #각 어레이들을 0:3, 3:6, 6:로 나눈다
+# print(np.hsplit(a, [3,6,9])) # 0:3, 3:6, 6:9 그리고 나머지
+# print(np.split(a, 3, 0)) #0은 축을 의미함. 3은 나눌 개수
+# print(np.split(a, [3,6,9], 0))
+
+# b = np.arange(12).reshape(4,3)
+# print(b)
+# print(np.vsplit(b, 2))# vertical array 2개로 나누기
+# print(np.split(b, 2, 0))
+# print(np.hsplit(b, [1]))
+# print(np.split(b, [1], 1))
+
+#검색 -> 수많은 데이터를 쉽고 빠르게 다루려는 이유에서 numpy를 많이들 씀
+a = np.arange(10, 20)
+print(np.where(a>15))
+print(np.where(a>15, 1, 0)) #보다 크면 1로, 아닐경우 0으로
+print(a)
+
+print(np.where(a>15, 99, a)) #아닐경우 그대로
+print(np.where(a>15, a, 0)) #아닐경우 0으로
+print(a)
+
+b = np.arange(12).reshape(3,4)
+print(b)
+coords = np.where(b>6)
+print(coords) # 2개의 축을 리턴 하는데 이걸 하나로 묶으면 x,y좌표처럼 됨
+print(np.stack((coords[0], coords[1]),-1))
+
+z = np.array(0,1,2,0,1,2)
+print(np.nonzero(z))  #index를 리턴함
+
+zz = np.array([[0,1,2],[1,2,0],[2,0,1]])
+coods = np.nonzero(zz)
+print(coords)
+print(np.stack((coords[0], coords[1]) -1))
+
+print(np.nonzero(a>15))
+print(np.where(a>15))
+print(np.nonzero(b>6))
+print(np.where(b>6))
+
+
+
+
