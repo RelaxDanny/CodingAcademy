@@ -299,5 +299,37 @@ print(np.nonzero(b>6))
 print(np.where(b>6))
 
 
+#Numpy 배열에 모든 요소가 참또는 거짓인지 확인할 때
+t = np.array([True, True, True])
+print(np.all(t))
+t[1] = False
+print(np.all(t))
 
+#all에 axis 인자를 지정하지 않으면 모든 요소에 대해서 True를 만족하는지 검색
+tt = np.array([[True,True], [False, True], [True, True]])
+print(np.all(tt, 0)) # [False, True] 
 
+print(np.all(tt, 1)) # [True, False, True]
+
+#이미지 생성
+import cv2
+import numpy as np
+img = np.zeros((120,120), dtype = np.uint8)
+img[25:35, :] = 45
+img[55:65, :] = 115
+img[85:95, :] = 160
+img[:, 35:45] = 205
+img[:, 75:85] = 255
+cv2.imshow('Gray', img)
+cv2.waitKey(0)
+cv2.destroyAllWindows
+
+img = np.zeros((120,120), dtype = np.uint8)
+img[25:35, :] = [255, 0, 0]
+img[55:65, :] = [0, 255, 0]
+img[85:95, :] = [0, 0, 255]
+img[:, 35:45] = [255, 255, 0]
+img[:, 75:85] = [255, 0, 255]
+cv2.imshow('BGR', img)
+cv2.waitKey(0)
+cv2.destroyAllWindows
