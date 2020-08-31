@@ -141,3 +141,67 @@ for i, (k, v) in enumerate(imgs.items()):
 
 plt.show()
 
+#알파 블랜딩
+#두 영상을 합성할때 더하기 연산이나, cv2.add()함수만으로는 좋은결과를 얻을 수 없는
+# 경우가 많다. 직접 더하기 연산을 하면 255를 넘는 경우 초과 값만을 가지므로 영상이
+#거뭇거뭇하게 나타나고 cv2.add()연산을 하면 대부분의 픽셀 값이 255가까이 몰리는
+#현상이 일어남
+
+#이미지 단순 합성
+import cv2
+import numpy as np
+import matplotlib.pylab as plt
+
+#연산에 사용할 이미지 읽기
+img1 = cv2.imread('0_high.jpg')
+img2 = cv2.imread('sudoku.jpg')
+
+#이미지 덧셈
+img3 = img1 + img2 #더하기 연산 ->화소가 고르지 못하고 중간에 이미지가 색이이상
+img4 = cv2.add(img1, img2) #opencv 함수 너무 하얀 픽셀이 많이나옴
+
+imgs = ('img1':img1, 'img2':img2, 'img3':img3, 'cv2.add(img1,img2)':img4)
+
+#이미지 출력
+for i, (k,v) in enumerate(imgs.items()):
+    plt.subplot(2,2,i+1)
+    plt.imshow(v[:,:,::-1])
+    plt.title(k)
+    plt.xticks([]); plt.yticks([])
+
+plt.show()
+
+# 두 영상을 합치려면 각 픽셀의 합이 255가 되지 않게 각각의 영상에
+#가중치를 줘서 계산해야 한다. 50% : 50% 이런식으로
+
+#50% 알파 블랜딩
+alpha = 0.5 #  합성에 사용할 가중치 50%
+
+img1 = cv2.imread('0_high.jpg')
+img2 = cv2.imread('sudoku.jpg')
+
+blended = img1 * alpha + img2 *(1-alpha) 
+blended = blended.astype(np.uint8) #소수점과 음수를 막기위해 
+cv2.imshow('blended', blended)
+
+#addWeighted()함수로 알파 블랜딩 적용
+des = cv2.addWeighted(img1, alpha, img2, (1-alpha), 0)
+cv2.imshow('cv2.addWeighted' dst)
+cv2.waitKey(0)
+cv2.destroyAllWindows() 
+
+#트랙바로 알파 블랜딩
+
+win_name = 'Alpha blending'
+trackbar_name = 'fade'
+
+#트랙바 이벤트 핸들러 함수
+def onChange(x):
+    alpha = x/100
+    dst = cv2.addWeighted(img1, 1-alpha, img2, alpha, 0)
+    cv2.imshow(win_name, dst)
+
+#합성 영상 읽기
+img1 = cv2.imread('img/man_face.jpg')
+img2 = cv2.imread('img/lion_face.jpg')
+
