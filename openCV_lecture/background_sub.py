@@ -36,7 +36,7 @@ import matplotlib
 from matplotlib.pyplot import imshow
 from matplotlib import pyplot as plt
 
-img = cv2.imread('0_high_sub.jpg')
+img = cv2.imread('img/0_high.jpg')
 gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
 kernel_size = 5
