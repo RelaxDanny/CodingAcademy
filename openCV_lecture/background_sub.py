@@ -1,13 +1,14 @@
 import numpy as np
 import cv2 as cv
 
-img = cv.imread('img/0_high.jpg')
+img = cv.imread('img/white_cab.jpg')
+hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
 
 mask = np.zeros(img.shape[:2],np.uint8)
 bgdModel = np.zeros((1,65),np.float64)
 fgdModel = np.zeros((1,65),np.float64)
 
-rect = (50,50,500,500)
+rect = (50,50,800,500)
 
 cv.grabCut(img,mask,rect,bgdModel,fgdModel,5,cv.GC_INIT_WITH_RECT)
 
@@ -15,28 +16,35 @@ mask2 = np.where((mask==2)|(mask==0),0,1).astype('uint8')
 
 img = img*mask2[:,:,np.newaxis]
 
+# print(np.where(img>250, 0, img)) #보다 크면 1로, 아닐경우 0으로
+# img = np.where(img == 0, 255, img)
+# print(a)
+# lower = np.array([200,255,255])
+# upper = np.array([255,255,255])
+
+# mask = cv.inRange(hsv, lower, upper)
+# img[mask>0] = (0,0,100)
+# print(np.where(a>15, 99, a)) #아닐경우 그대로
+# print(np.where(a>15, a, 0)) #아닐경우 0으로
+# print(a)
+
+
+
 cv.imshow('img', img)
 cv.waitKey(0)
 cv.destroyAllWindows()
 
-# plt.imshow(img),plt.colorbar(),plt.show()
+plt.imshow(img),plt.colorbar(),plt.show()
 
-# I am new to opencv-python. I have found the lines in image through houghtransformP. The lines drawn from hough transform are discontinued and are giving multiple lines. I need to draw only one line for the edges and find the 'distance' between lines which are found.
 
-# The output image is shown below
-
-# """
-# Created on Fri Nov  8 11:41:16 2019
-
-# @author: romanth.chowan
-# # """
+# #++++++++++++++++++++++++++++++++++++++++++++++++++++
 # import cv2
 # import numpy as np
 # import matplotlib
 # from matplotlib.pyplot import imshow
 # from matplotlib import pyplot as plt
 
-# img = cv2.imread('img/0_high.jpg')
+# img = cv2.imread('img/white_cab.jpg')
 # gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
 # kernel_size = 5
@@ -48,8 +56,8 @@ cv.destroyAllWindows()
 
 # rho = 1  # distance resolution in pixels of the Hough grid
 # theta = np.pi / 180  # angular resolution in radians of the Hough grid
-# threshold = 15  # minimum number of votes (intersections in Hough grid cell)
-# min_line_length = 50  # minimum number of pixels making up a line
+# threshold = 100  # minimum number of votes (intersections in Hough grid cell)
+# min_line_length = 100  # minimum number of pixels making up a line
 # max_line_gap = 20  # maximum gap in pixels between connectable line segments
 # line_image = np.copy(img) * 0  # creating a blank to draw lines on
 
