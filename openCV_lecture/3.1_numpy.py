@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+
+=======
 import cv2
 img = cv2.imread("white.jpg")
 print(type(img)) # numpy.ndarray 형태
@@ -30,6 +33,7 @@ print(c)
 print(c.dtype)
 print("*" * 30)
 print("*" * 30)
+>>>>>>> d3d18406b7abc35d4b16318b939f586eb003c0da
 d = np.array([1,2,3,4], dtype=np.float32)
 print(d)
 
