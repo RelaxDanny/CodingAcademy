@@ -109,4 +109,8 @@ plt.imshow(img1[:,:,(2,1,0)])
 plt.xticks([])
 plt.yticks([])
 
+<<<<<<< HEAD
 plt.show()
+=======
+plt.show()
+>>>>>>> d3d18406b7abc35d4b16318b939f586eb003c0da
