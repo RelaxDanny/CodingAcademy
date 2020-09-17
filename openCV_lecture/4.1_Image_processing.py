@@ -210,3 +210,81 @@ cv2.createTrackbar(trackbar_name, win_name, 0, 100, onChnage)
 
 cv2.waitKey()
 cv2.destroyAllWindows()
+
+
+#히스토그램
+#영상을 분석하기 위한 그래프
+
+#그레이 스케일 1채널 히스토그램
+img = cv2.imread("img/0_high.jpg", cv2.IMREAD_GRAYSCALE)
+cv2.imshow('img', img)
+
+#히스토그램 계산 및 그리기
+#cv2.calcHist(img, channel, mask, histSize, ranges)
+hist = cv2.calcHist([img], [0], None, [256], [0,256])
+plt.plot(hist)
+
+print(hist.shape)
+print(hist.sum(), img.shape)
+plt.show()
+
+#컬러 히스토그램
+img = cv2.imread("img/0_high.jpg")
+cv2.imshow('img', img)
+
+#히스토그램 계산 및 그리기
+channels = cv2.split(img)
+colors = ('b', 'g', 'r')
+for (ch, color) in zip (channels, colors):
+    hist = cv2.calcHist([ch], [0], None, [256], [0, 256])
+    plt.plot(hist, color = color)
+plt.show()
+
+"""
+Normalize = 원래 기준이 서로 다른 값을 같은 기준이 되게 만드는것을 말한다.
+영호랑 승현이가 다른학교를 다니고 기말고사를 봤는데, 영호는 20문제중 19문제
+승현이는 25문제중 20문제를 맞췃다고 햇을때, 승현이가 나보다 하나 더 맞췄다고 해서 더 잘봤다고
+볼 수 는 없음. 이런경우에 우리가 100점이라는 점수를 기준으로 normalize를 하는것!
+
+공식: (I - Min) * (newMax - newMin) / (Max - Min) + newMin
+
+I = normalize 이전 값
+Min, Max : 노멀라이즈 이전 범위의 최소 값, 최대값
+newMin, newMax: 노멀라이즈 이후 범위의 최소 값, 최대 값
+
+"""
+img = cv2.imread("img/0_high.jpb", cv2.IMREAD_GRAYSCALE)
+
+#직접 연산
+img_f = img.astype(np.float32)
+img_norm = ((img_f - img_f.min()) * (255) / (img_f.max() - img_f.min()))
+img_norm = img_norm.astype(np.uint8)
+
+#opencv 연산
+
+"""
+#cv2.normalize(src, dst, alpha, beta, type_flag)
+src = 노멀라이즈 이전 데이터
+dst = 노멀라이즈 이후 데이터
+alpha = 노멀라이즈 구간 1
+beta = 노멀라이즈 구간 2, 구간 노멀라이즈가 아닌경우 사용 안함
+type_flag = 알고리즘 선택 플래그 
+
+"""
+img_norm2 = cv2.normalize(img, None, 0, 255, cv2.NORM_MINMAX)
+
+#히스토그램 계산
+hist = cv2.caclHist([img], [0], None, [256], [0,255])
+hist_norm = cv2.calcHist([img_norm], [0], None, [256], [0, 255])
+hist_norm2 = cv2.calcHist([img_norm2], [0], None, [256], [0, 256])
+
+cv2.imshow('Before', img)
+cv2.imshow('Manual', img_norm)
+cv2.imshow("cv2.normalize()", img_norm2)
+
+hists = {'Before' : hist, "Manual" : img_norm, "cv2.normalize()" : img_norm2}
+for i, (k,v) in enumerate(hists.items()):
+    plt.subplot(1, 3, i-1)
+    plt.title(k)
+    plt.plot(v)
+plt.show()
