@@ -85,13 +85,13 @@ import matplotlib.pylab as plt
 
 # plt.show()
 
-#이미지 합성!
-import cv2
-import numpy as np
-import matplotlib.pylab as plt 
+# #이미지 합성!
+# import cv2
+# import numpy as np
+# import matplotlib.pylab as plt 
 
-img1 = cv2.imread('img/0_high.jpg')
-img2 = cv2.imread('img/sudoku.png')
+# img1 = cv2.imread('img/0_high.jpg')
+# img2 = cv2.imread('img/sudoku.png')
 
 # #두 사진의 픽셀 덧셈
 # img3 = img1 + img2 # 화소가 고르지 못하고 중간 이미지 색이 이상해짐
@@ -119,25 +119,52 @@ img2 = cv2.imread('img/sudoku.png')
 # cv2.waitKey(0)
 # cv2.destroyAllWindows()
 
-#Track bar을 이용해서 알파블렌딩 설정하기
+# #Track bar을 이용해서 알파블렌딩 설정하기
 
-win_name = "Alpha belnding"
-trackbar_name = "fade"
+# win_name = "Alpha belnding"
+# trackbar_name = "fade"
 
-#트랙바 이벤트 핸들러 함수
-def onChange(x):
-    alpha = x/100
-    dst = cv2.addWeighted(img1, 1-alpha, img2, alpha, 0)
-    cv2.imshow(win_name, dst)
+# #트랙바 이벤트 핸들러 함수
+# def onChange(x):
+#     alpha = x/100
+#     dst = cv2.addWeighted(img1, 1-alpha, img2, alpha, 0)
+#     cv2.imshow(win_name, dst)
 
-img1 = cv2.imread('img/man_face.jpg')
-img2 = cv2.imread("img/lion_face.jpg")
+# img1 = cv2.imread('img/man_face.jpg')
+# img2 = cv2.imread("img/lion_face.jpg")
 
-cv2.imshow(win_name, img1)
-cv2.createTrackbar(trackbar_name, win_name, 0, 100, onChange)
+# cv2.imshow(win_name, img1)
+# cv2.createTrackbar(trackbar_name, win_name, 0, 100, onChange)
 
-cv2.waitKey()
+# cv2.waitKey()
+# cv2.destroyAllWindows()
+
+import cv2
+import numpy as np
+
+file_name = "img/fish.jpg"
+img = cv2.imread(file_name)
+rows, cols = img.shape[:2]
+
+#원근 변화 전후의 4개 좌표를 구함
+pts1 = np.float32([[0,0], [0,rows], [cols,0], [cols, rows]])
+pts2 = np.float32([[100,50], [10, rows-50], [cols-100, 50], [cols-10, rows-50]])
+
+#변환 전의 좌표를 원본 이미지에 표시
+cv2.circle(img, (0,0), 10, (255,0,0), -1)
+cv2.circle(img, (0,rows), 10, (0,255,0), -1)
+cv2.circle(img, (cols,0), 10, (0,0,255), -1)
+cv2.circle(img, (cols,rows), 10, (255,255,0), -1)
+
+# 원근 변환행렬 계산
+mtrx = cv2.getPerspectiveTransform(pts1, pts2)
+
+# 원근 변환 적용
+dst = cv2.warpPerspective(img, mtrx, (cols, rows))
+
+cv2.imshow("origin", img)
+cv2.imshow('perpective', dst)
+cv2.waitKey(0)
 cv2.destroyAllWindows()
-
 
 
