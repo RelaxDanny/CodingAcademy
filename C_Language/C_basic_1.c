@@ -1,14 +1,13 @@
 #include <stdio.h>
 
 int main(){
-    float a = 3.141592f;
-    double b = 3.141592;
-    int c = 123;
-    printf("a : %.2f \n", a);
-    printf("c : %100f \n", b);
-    printf("b : %6.99f \n", b);
+    int arr[10] = {1,2,3,4,5,6,7,8,9,10};
+
+    printf("3rd value of this arr: %d \n", arr[9]);
     return 0;
 }
+
+
 
 // a= 소수점 두자리까지만 .2, .3-> 소수점 3자리 , .4f 소수점 4자리
 // b= length of the string = 5 -> 
