@@ -1,16 +1,23 @@
 #include <stdio.h>
 
 int main(){
-    
+    int arr[3] = {1,2,3};
+    int (*parr)[3] = &arr; // 크기가 [3]인 배열을 가르키는 포인터! 
+
+    printf("arr[1] : %p \n", arr);
+    printf("parr[1] : %p \n", parr);
+
+    return 0;
 }
 
-write a program that prints out all the unique elements of an array.
 
-2,3,4,3,5
+// 포인터는 메모리 상에 위치한 특정한 데이터의 (시작)주소값을 보관하는 "변.수"
+// (포인터에 주소값이 저장되는 데이터의 형태 type) *(포인터의 이름); -> int *a; 
+// int* a; int *a; 
+// & 연산자 
+// &주소값을 계산할 데이터 
+// &a 
 
-get N inputs from user and store them into the array.
-
-and then print out the unique values.
 
 // a= 소수점 두자리까지만 .2, .3-> 소수점 3자리 , .4f 소수점 4자리
 // b= length of the string = 5 -> 

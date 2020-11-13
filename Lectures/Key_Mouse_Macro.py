@@ -2,6 +2,7 @@ import mouse as mo
 import keyboard as key
 import time
 import win32api
+# pip install pywin32
 import pickle
 import os
 import queue
