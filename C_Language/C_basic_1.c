@@ -1,18 +1,31 @@
 #include <stdio.h>
 
-int main(){
-    int arr[2][3];
-    int brr[10][3];
-    int crr[2][5];
 
-    int (*parr)[3];
 
-    parr = arr;
-    parr = brr;
-    parr = crr;
-    
+int add_number(int *parr){
+    int i;
+    for (i=0; i<3 ; i++){
+        parr[i]++;
+    }
     return 0;
 }
+
+int main(){
+    int arr[3];
+    int i;
+
+    for (i = 0; i < 3; i++){
+        scanf("%d", &arr[i]);
+    }
+    add_number(arr);
+
+    printf("Each Element : %d, %d, %d \n", arr[0], arr[1], arr[2]);
+
+}
+
+유저로부터 10개의 값을 받고 배열에 저장한 후 다른 함수에 보내어 Max value를 찾아 return 하라. 
+
+maximum(arr)
 
 
 // 포인터는 메모리 상에 위치한 특정한 데이터의 (시작)주소값을 보관하는 "변.수"
