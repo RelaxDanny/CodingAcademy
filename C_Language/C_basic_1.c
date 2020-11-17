@@ -1,12 +1,16 @@
 #include <stdio.h>
 
 int main(){
-    int arr[3] = {1,2,3};
-    int (*parr)[3] = &arr; // 크기가 [3]인 배열을 가르키는 포인터! 
+    int arr[2][3];
+    int brr[10][3];
+    int crr[2][5];
 
-    printf("arr[1] : %p \n", arr);
-    printf("parr[1] : %p \n", parr);
+    int (*parr)[3];
 
+    parr = arr;
+    parr = brr;
+    parr = crr;
+    
     return 0;
 }
 
