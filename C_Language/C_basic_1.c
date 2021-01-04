@@ -4,13 +4,13 @@ int main(){
     
 }
 
-write a program that prints out all the unique elements of an array.
+// write a program that prints out all the unique elements of an array.
 
-2,3,4,3,5
+// 2,3,4,3,5
 
-get N inputs from user and store them into the array.
+// get N inputs from user and store them into the array.
 
-and then print out the unique values.
+// and then print out the unique values.
 
 // a= 소수점 두자리까지만 .2, .3-> 소수점 3자리 , .4f 소수점 4자리
 // b= length of the string = 5 -> 
