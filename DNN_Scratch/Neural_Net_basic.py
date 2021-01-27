@@ -132,3 +132,6 @@ layer1_outputs = np.dot(weights, np.array(weights).T) + biases # 예전에 배�
 layer2_outputs = np.dot(layer1_outputs, np.array(weights2).T) + biases2 # 예전에 배운것처럼 np.array형식의 덧셈은 행간의 덧셈이 되므로 for loop 필요 x
 
 print(layer2_outputs) # ouput의 크기는 Ax + B 에서 x의 값에 맞춰야 한다 
+
+
+# 
