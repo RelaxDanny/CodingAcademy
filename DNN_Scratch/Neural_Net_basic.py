@@ -55,7 +55,7 @@ weights = [[0.2, 0.8, -0.5, 1.0],
            [-0.26, -0.27, 0.17, 0.87]]
 
 biases = [2.0, 3.0, 0.5]
-
+# y = ax + b -> output = weight * input + bias
 # Dot_Product = a[0]*b[0] + a[1]*b[1] + ... + a[n]+b[n]
 # output = np.dot([1,2,5,6], [0.2,0.6,-0.1,0.9])+2
 layer_outputs = []
