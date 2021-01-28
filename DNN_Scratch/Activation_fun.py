@@ -42,9 +42,8 @@ X = [[1, 2, 3, 2.5],
     [2, 5, -1, 2],
     [-1.5, 2.7, 3.3, -0.8]]
 
-inputs = [0, 2, -1, 3.3, -2.7, 1.1, 2.2, -100]
-output = []
-
+# inputs = [0, 2, -1, 3.3, -2.7, 1.1, 2.2, -100]
+# output = []
 
 # # ReLU activation fuinction
 # for each in inputs:
@@ -67,6 +66,9 @@ class Layer_Dense:
 class Activation_ReLU: #Rectified Linear Unit
     def forward(self, inputs):
         self.output = np.maximum(0, inputs)
+
+
+
 
 layer1 = Layer_Dense(4, 5) # 뉴론 갯수 맘대로 
 layer2 = Layer_Dense(5, 2) # 여기서는 layer1의 결과값이 결국 layer2의 input이 되니 dot production이 적용된 최종 크기가 input이 되어야함
