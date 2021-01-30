@@ -1,0 +1,50 @@
+
+05-26 숙제
+DUE 06-01 월요일
+
+1.
+
+10000개의 dataset을 파이썬을 이용하여 학습하는 과제이다.
+
+주어진 10k의 문장에 포함 되어있는 각각의 word를 dictonary에 저장시키고
+
+각 글자의 개수를 나타내는 dictonary를 완성해야 한다.
+
+예)
+
+{"Apple" : 142, "I" : 1223, "am" : 992, "boy" : 402}
+
+
+위와 같은 dictonary를 완성해야 하며, 콤마, 특수문자등은 깨끗하고 정확한 데이터를 위해 넣어서는 안된다.
+
+(단, 숫자, 마침표는 포함 가능)
+
+
+2. 
+
+위에서는 각 단어의 개수를 포함한 dictonary를 만들었을때, 2번에서는 문장의 2단어씩 짝을 지어 dictonary를 
+
+만들어야 한다.
+
+예) 
+
+{('on', 'July'): 9, ('the', 'Hess'): 1}
+
+
+위와 같이 tuple 형식의 Key와 정수 형식의 Value를 포함하여야 한다.
+
+1번과 같이 콤마, 특수문자등은 깨끗하고 정확한 데이터를 위해 넣어서는 안된다.
+
+(단, 숫자, 마침표는 포함 가능)
+
+
+f = open("txt.txt", "r", "UTF-8")
+
+sentence_list = []
+for i in range(10000):
+    line = f.readline()
+    sentence_list.append(line)
+
+print(len(list))
+
+"how to read each line in a text file python" 

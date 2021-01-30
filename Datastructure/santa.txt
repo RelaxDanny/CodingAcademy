@@ -1,0 +1,8 @@
+(! (CHILD x)) (LOVES x s)
+(! (LOVES x s)) (! (REINDEER y)) (LOVES x y)
+(REINDEER r)
+(REDNOSE r)
+(! (REDNOSE x)) (WEIRD x) (CLOWN x)
+(! (REINDEER x)) (! (CLOWN x))
+(! (WEIRD x)) (! (LOVES s x))
+(! (CHILD s))

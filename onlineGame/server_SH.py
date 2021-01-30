@@ -1,61 +1,74 @@
 import socket
 from _thread import *
-import sys
+from player import Player
+import pickle
+from game_SH import Game
 
-server = "10.12.49.214"
+server = "10.12.49.24"
 port = 5555
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)#bridge
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)#bridge #TCP
 
 try: #에러가 일어났을때 체크하기위한 코드
-    s.bind((server, port))
+    s.bind((server, port)) 
 except socket.error as e:
     str(e)
 
-s.listen(2) # unlimited player can join this game, but if 2, only 2 can enter
+s.listen() # unlimited player can join this game
+
 print("Waiting for a connection...")
 print("server started!")
 
+connected = set()
+games = {}
+idCount = 0 # client가 들어올때마다 1씩 올라가는 counter 
 
-def read_pos(str):
-    str = str.split(",") # ,형태로스트링을 나눠라 24, 30
-    return int(str[0]), int(str[1])
-
-def make_pos(tup):
-    return str(tup[0]) + "," + str(tup[1]) # -. 24, 30 ->  "24, 30"
-
-pos = [(0,0), (150,150)] 
-
-def threaded_client(conn, currentPlayer):
-    conn.send(str.encode(make_pos(pos[currentPlayer])))
-    reply = ""
+def threaded_client(conn, p, gameId):
+    global idCount #When some leaves, it counts how many clients are left.
+    conn.send(str.encode(p))
+    reply = "" # "" << 값이 끊겨
+    
     while True:
-        try:
-            data = read_pos(conn.recv(2048).decode())
-            pos[currentPlayer] = data
+        data = conn.recv(4096).decode() #Client  = USER = 게임에 들어온사람으로 부터 받은 값은 = data
 
+        if gameId in games: # games안에 gameId가 있다면. 
+            game = games[gameId]
             if not data:
-                print("Disconnected")
                 break
             else:
-                if player == 1:
-                    reply = pos[0]
-                else:
-                    reply = pos[1]
+                if data == "reset":
+                    game.reset()
+                elif data != "get": # 코딩에서 ! 는 NOT을 의미함. Not equal
+                    game.play(p, data)
 
-                print("Recieved:", data)
-                print("Sending:", reply)
-
-            conn.sendall(str.encode(reply)) #encode 해서 보내고 decode 해서 받는다
-        except:
-            break
-    print("Lost connection")
+                reply = game
+                conn.sendall(pickle.dumps(reply))
+        else:
+            break     
+    print("Lost Connection")
+    try: 
+        del games[gameId]
+        print("Closing Game", gameId)
+    except:
+        pass
+    idCount -= 1
     conn.close()
-
-currentPlayer = 0
+    
 while True:
     conn, addr = s.accept()
     print("Connected to:", addr)
 
-    start_new_thread(threaded_client, (conn, currentPlayer))
-    currentPlayer += 1
+    #after the connection
+    idCount += 1
+    p = 0
+    gameId = (idCount - 1)//2  #각 두명의 플레이어가 접속 했을때, 둘을 합쳐줘라. 4.5 => 5
+    if idCount % 2 == 1:
+        games[gameId] = Game(gameId)
+        print("Creating a new Game")
+    else:
+        #짝수면 이미 Pair가있다는것.
+        games[gameId].ready = True
+        p = 1 #player = 1
+    #10 // 3 = 3
+    #10 / 3 = 3.3333333
+    start_new_thread(threaded_client, (conn, p, gameId))
